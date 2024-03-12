@@ -21,7 +21,7 @@ static class Commands
         root.AddOption(UrlOption);
         root.AddOption(StaleDelayInMinutesOption);
         
-        ConfigureServiceControlCommands(root);
+        root.AddServiceControlCommands();
 
 
         // var purgeStaleMonitoredEndpointInstancesCommand = new Command("purge-stale-instances",
@@ -31,7 +31,7 @@ static class Commands
         return root;
     }
 
-    static void ConfigureServiceControlCommands(RootCommand rootCommand)
+    static void AddServiceControlCommands(this RootCommand rootCommand)
     {
         var reportServiceControlStaleEndpointsCommand = new Command("report-service-control-stale-endpoints", "Report ServiceControl stale endpoints");
         reportServiceControlStaleEndpointsCommand.SetHandler(async context =>
@@ -45,51 +45,11 @@ static class Commands
         var purgeServiceControlStaleEndpointsCommand = new Command("purge-service-control-stale-endpoints", "Purge ServiceControl stale endpoints");
         purgeServiceControlStaleEndpointsCommand.SetHandler(async context =>
         {
-            
+            var serviceControlUrl = context.ParseResult.GetValueForOption(UrlOption);
+            var cutoff = context.ParseResult.GetValueForOption(StaleDelayInMinutesOption);
+            await App.PurgeServiceControlInactiveEndpoints(new Uri(serviceControlUrl!), cutoff);
         });
         
         rootCommand.AddCommand(purgeServiceControlStaleEndpointsCommand);
     }
-
-    static void ConfigureReportServiceControlInactiveEndpointsCommand(RootCommand root)
-    {
-        var cmd = new Command("report-inactive-endpoints",
-            "Lists ServiceControl decommissioned endpoints that stopped sending heartbeats.");
-        
-        var serviceControlUrlArg = new Argument<string>("sc-url",
-            getDefaultValue: () => Path.Combine(Path.GetTempPath(), "http://localhost:33333/"),
-            description: "The ServiceControl primary instance URL (without the '/api')");
-        cmd.AddArgument(serviceControlUrlArg);
-        
-        cmd.SetHandler(async context =>
-        {
-            var serviceControlUrl = context.ParseResult.GetValueForArgument(serviceControlUrlArg);
-            await App.ReportServiceControlInactiveEndpoints(new Uri(serviceControlUrl));
-        });
-    }
-
-    // static void ConfigurePurgeServiceControlInactiveEndpointsCommand(RootCommand root)
-    // {
-    //     var cmd = new Command("purge-inactive-endpoints",
-    //         "Purges ServiceControl decommissioned endpoints that stopped sending heartbeats.");
-    //
-    //     var serviceControlUrlArg = new Argument<string>("sc-url",
-    //         getDefaultValue: () => Path.Combine(Path.GetTempPath(), "http://localhost:33333/"),
-    //         description: "The ServiceControl primary instance URL (without the '/api')");
-    //     cmd.AddArgument(serviceControlUrlArg);
-    //
-    //     var cutoffArg = new Argument<TimeSpan>("cutoff",
-    //         getDefaultValue: () => TimeSpan.FromMinutes(5),
-    //         description: "The time since endpoints reported the last heartbeat (TimeSpan).");
-    //     cmd.AddArgument(cutoffArg);
-    //
-    //     cmd.SetHandler(async context =>
-    //     {
-    //         var serviceControlUrl = context.ParseResult.GetValueForArgument(serviceControlUrlArg);
-    //         var cutoff = context.ParseResult.GetValueForArgument(cutoffArg);
-    //         await App.PurgeServiceControlInactiveEndpoints(new Uri(serviceControlUrl), cutoff);
-    //     });
-    //
-    //     root.AddCommand(cmd);
-    // }
 }

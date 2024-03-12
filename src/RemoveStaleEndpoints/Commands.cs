@@ -20,8 +20,8 @@ static class Commands
     {
         var root = new RootCommand(
             "A tool to discover and purge ServiceControl and ServiceControl.Monitoring stale endpoints.");
-        root.AddOption(UrlOption);
-        root.AddOption(StaleDelayInMinutesOption);
+        root.AddGlobalOption(UrlOption);
+        root.AddGlobalOption(StaleDelayInMinutesOption);
 
         root.AddServiceControlCommands();
         root.AddServiceControlMonitoringCommands();

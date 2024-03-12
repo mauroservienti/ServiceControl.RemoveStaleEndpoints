@@ -37,7 +37,7 @@ static class Commands
         reportServiceControlStaleEndpointsCommand.SetHandler(async context =>
         {
             var serviceControlUrl = context.ParseResult.GetValueForOption(UrlOption);
-            await ServiceControlApp.ReportServiceControlInactiveEndpoints(new Uri(serviceControlUrl!));
+            await ServiceControlApp.ReportInactiveEndpoints(new Uri(serviceControlUrl!));
         });
         
         rootCommand.AddCommand(reportServiceControlStaleEndpointsCommand);
@@ -47,7 +47,7 @@ static class Commands
         {
             var serviceControlUrl = context.ParseResult.GetValueForOption(UrlOption);
             var cutoff = context.ParseResult.GetValueForOption(StaleDelayInMinutesOption);
-            await ServiceControlApp.PurgeServiceControlInactiveEndpoints(new Uri(serviceControlUrl!), cutoff);
+            await ServiceControlApp.PurgeInactiveEndpoints(new Uri(serviceControlUrl!), cutoff);
         });
         
         rootCommand.AddCommand(purgeServiceControlStaleEndpointsCommand);

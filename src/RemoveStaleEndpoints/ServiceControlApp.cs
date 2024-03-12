@@ -4,7 +4,7 @@ namespace RemoveStaleEndpoints;
 
 static class ServiceControlApp
 {
-    public static async Task PurgeServiceControlInactiveEndpoints(Uri serviceControlUri, TimeSpan cutoff)
+    public static async Task PurgeInactiveEndpoints(Uri serviceControlUri, TimeSpan cutoff)
     {
         var client = new HttpClient()
         {
@@ -48,7 +48,7 @@ static class ServiceControlApp
         return inactive ?? [];
     }
 
-    public static async Task ReportServiceControlInactiveEndpoints(Uri serviceControlUri)
+    public static async Task ReportInactiveEndpoints(Uri serviceControlUri)
     {
         var client = new HttpClient()
         {

@@ -37,7 +37,7 @@ static class Commands
         reportServiceControlStaleEndpointsCommand.SetHandler(async context =>
         {
             var serviceControlUrl = context.ParseResult.GetValueForOption(UrlOption);
-            await App.ReportServiceControlInactiveEndpoints(new Uri(serviceControlUrl!));
+            await ServiceControlApp.ReportServiceControlInactiveEndpoints(new Uri(serviceControlUrl!));
         });
         
         rootCommand.AddCommand(reportServiceControlStaleEndpointsCommand);
@@ -47,7 +47,28 @@ static class Commands
         {
             var serviceControlUrl = context.ParseResult.GetValueForOption(UrlOption);
             var cutoff = context.ParseResult.GetValueForOption(StaleDelayInMinutesOption);
-            await App.PurgeServiceControlInactiveEndpoints(new Uri(serviceControlUrl!), cutoff);
+            await ServiceControlApp.PurgeServiceControlInactiveEndpoints(new Uri(serviceControlUrl!), cutoff);
+        });
+        
+        rootCommand.AddCommand(purgeServiceControlStaleEndpointsCommand);
+    }
+    
+    static void AddServiceControlMonitoringCommands(this RootCommand rootCommand)
+    {
+        var reportServiceControlMonitoringStaleInstancesCommand = new Command("report-service-control-monitoring-stale-instances", "Report ServiceControl.Monitoring stale endpoint instances");
+        reportServiceControlMonitoringStaleInstancesCommand.SetHandler(async context =>
+        {
+            var serviceControlUrl = context.ParseResult.GetValueForOption(UrlOption);
+
+        });
+        
+        rootCommand.AddCommand(reportServiceControlMonitoringStaleInstancesCommand);
+        
+        var purgeServiceControlStaleEndpointsCommand = new Command("purge-service-control-monitoring-stale-instances", "Purge ServiceControl.Monitoring stale endpoint instances");
+        purgeServiceControlStaleEndpointsCommand.SetHandler(async context =>
+        {
+            var serviceControlUrl = context.ParseResult.GetValueForOption(UrlOption);
+            var cutoff = context.ParseResult.GetValueForOption(StaleDelayInMinutesOption);
         });
         
         rootCommand.AddCommand(purgeServiceControlStaleEndpointsCommand);

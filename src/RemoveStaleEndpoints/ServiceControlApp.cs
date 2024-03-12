@@ -2,7 +2,7 @@ using System.Text.Json;
 
 namespace RemoveStaleEndpoints;
 
-static class App
+static class ServiceControlApp
 {
     public static async Task PurgeServiceControlInactiveEndpoints(Uri serviceControlUri, TimeSpan cutoff)
     {

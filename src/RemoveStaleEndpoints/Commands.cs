@@ -33,14 +33,6 @@ static class Commands
 
     static void ConfigureServiceControlCommands(RootCommand rootCommand)
     {
-        var purgeServiceControlStaleEndpointsCommand = new Command("purge-service-control-stale-endpoints", "Purge ServiceControl stale endpoints");
-        purgeServiceControlStaleEndpointsCommand.SetHandler(async context =>
-        {
-            
-        });
-        
-        rootCommand.AddCommand(purgeServiceControlStaleEndpointsCommand);
-        
         var reportServiceControlStaleEndpointsCommand = new Command("report-service-control-stale-endpoints", "Report ServiceControl stale endpoints");
         reportServiceControlStaleEndpointsCommand.SetHandler(async context =>
         {
@@ -49,6 +41,14 @@ static class Commands
         });
         
         rootCommand.AddCommand(reportServiceControlStaleEndpointsCommand);
+        
+        var purgeServiceControlStaleEndpointsCommand = new Command("purge-service-control-stale-endpoints", "Purge ServiceControl stale endpoints");
+        purgeServiceControlStaleEndpointsCommand.SetHandler(async context =>
+        {
+            
+        });
+        
+        rootCommand.AddCommand(purgeServiceControlStaleEndpointsCommand);
     }
 
     static void ConfigureReportServiceControlInactiveEndpointsCommand(RootCommand root)

@@ -1,13 +1,21 @@
 {
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "RemoveStaleEndpoints (Report Monitoring stale instances)": {
+    "Report Primary stale endpoints": {
+      "commandName": "Project",
+      "commandLineArgs": "report-service-control-stale-endpoints --url http://localhost:33333/"
+    },
+    "Purge Primary stale endpoints (10-sec cutoff)": {
+      "commandName": "Project",
+      "commandLineArgs": "purge-service-control-stale-endpoints --url http://localhost:33333/ --cutoff 00:00:10"
+    },
+    "Report Monitoring stale instances": {
       "commandName": "Project",
       "commandLineArgs": "report-service-control-monitoring-stale-instances --url http://localhost:33633"
     },
-    "RemoveStaleEndpoints (Report Primary stale endpoints)": {
-    "commandName": "Project",
-    "commandLineArgs": "report-service-control-stale-endpoints --url http://localhost:33333/"
-  }
+    "Purge Monitoring stale instances": {
+      "commandName": "Project",
+      "commandLineArgs": "purge-service-control-monitoring-stale-instances --url http://localhost:33633"
+    }
   }
 }

@@ -9,20 +9,12 @@ static class Commands
         Arity = ArgumentArity.ExactlyOne,
     };
 
-    // TODO move this to an arg for ServiceControl only, Monitoring doesn't have this concept
-    static Option<TimeSpan> StaleDelayInMinutesOption = new(["--stale-delay"], () => TimeSpan.FromMinutes(5))
-    {
-        Description = "Stale delay (TimeSpan).",
-        Arity = ArgumentArity.ZeroOrOne,
-    };
-
     public static RootCommand Configure()
     {
         var root = new RootCommand(
             "A tool to discover and purge ServiceControl and ServiceControl.Monitoring stale endpoints.");
         root.AddGlobalOption(UrlOption);
-        root.AddGlobalOption(StaleDelayInMinutesOption);
-
+        
         root.AddServiceControlCommands();
         root.AddServiceControlMonitoringCommands();
 
@@ -33,6 +25,13 @@ static class Commands
     {
         var reportServiceControlStaleEndpointsCommand = new Command("report-service-control-stale-endpoints",
             "Report ServiceControl stale endpoints");
+        
+        var cutoffArg = new Argument<TimeSpan>("cutoff",
+            getDefaultValue: () => TimeSpan.FromMinutes(5),
+            description: "Stale delay (TimeSpan).");
+        
+        reportServiceControlStaleEndpointsCommand.AddArgument(cutoffArg);
+        
         reportServiceControlStaleEndpointsCommand.SetHandler(async context =>
         {
             var serviceControlUrl = context.ParseResult.GetValueForOption(UrlOption);
@@ -46,7 +45,7 @@ static class Commands
         purgeServiceControlStaleEndpointsCommand.SetHandler(async context =>
         {
             var serviceControlUrl = context.ParseResult.GetValueForOption(UrlOption);
-            var cutoff = context.ParseResult.GetValueForOption(StaleDelayInMinutesOption);
+            var cutoff = context.ParseResult.GetValueForArgument(cutoffArg);
             await ServiceControlApp.PurgeInactiveEndpoints(new Uri(serviceControlUrl!), cutoff);
         });
 

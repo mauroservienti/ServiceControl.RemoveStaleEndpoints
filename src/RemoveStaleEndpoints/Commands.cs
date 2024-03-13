@@ -26,10 +26,6 @@ static class Commands
         root.AddServiceControlCommands();
         root.AddServiceControlMonitoringCommands();
 
-        // var purgeStaleMonitoredEndpointInstancesCommand = new Command("purge-stale-instances",
-        //     "Purges ServiceControl.Monitoring endpoint instances that stopped stopped reporting metrics.");
-
-
         return root;
     }
 
@@ -75,6 +71,7 @@ static class Commands
         purgeServiceControlStaleEndpointsCommand.SetHandler(async context =>
         {
             var serviceControlUrl = context.ParseResult.GetValueForOption(UrlOption);
+            await ServiceControlMonitoringApp.PurgeInactiveEndpoints(new Uri(serviceControlUrl!));
         });
 
         rootCommand.AddCommand(purgeServiceControlStaleEndpointsCommand);

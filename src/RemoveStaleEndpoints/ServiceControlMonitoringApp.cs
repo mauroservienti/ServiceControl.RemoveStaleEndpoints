@@ -56,4 +56,31 @@ public class ServiceControlMonitoringApp
             }
         }
     }
+
+    public static async Task PurgeInactiveEndpoints(Uri serviceControlUri)
+    {
+        var client = new HttpClient()
+        {
+            BaseAddress = serviceControlUri
+        };
+
+        var staleEndpointInstances = await GetStaleInstances(client);
+        await DeleteStaleEndpointInstances(client, staleEndpointInstances);
+    }
+
+    static async Task DeleteStaleEndpointInstances(HttpClient client, List<MonitoredEndpoint> staleEndpointInstances)
+    {
+        foreach (var endpoint in staleEndpointInstances)
+        {
+            Console.WriteLine($"{endpoint.Name} is stale with {endpoint.DisconnectedCount} disconnected instances.");
+            Console.WriteLine("Disconnected instances will be deleted.");
+            foreach (var instance in endpoint.StaleInstances)
+            {
+                Console.WriteLine($"\tRemoving instance ID {instance.Id}.");
+                var deleteUrl = $"monitored-instance/{endpoint.Name}/{instance.Id}";
+                await client.DeleteAsync(deleteUrl);
+                Console.WriteLine($"Instance {instance.Id} removed.");
+            }
+        }
+    }
 }

@@ -47,6 +47,12 @@ public class ServiceControlMonitoringApp
         };
 
         var inactiveEndpoints = await GetStaleInstances(client);
+        if (inactiveEndpoints.Count == 0)
+        {
+            Console.WriteLine("There are no stale endpoint instances");
+            return;
+        }
+        
         foreach (var endpoint in inactiveEndpoints)
         {
             Console.WriteLine($"{endpoint.Name} is stale with {endpoint.DisconnectedCount} disconnected instances.");
@@ -65,6 +71,12 @@ public class ServiceControlMonitoringApp
         };
 
         var staleEndpointInstances = await GetStaleInstances(client);
+        if (staleEndpointInstances.Count == 0)
+        {
+            Console.WriteLine("There are no stale endpoints");
+            return;
+        }
+ 
         await DeleteStaleEndpointInstances(client, staleEndpointInstances);
     }
 

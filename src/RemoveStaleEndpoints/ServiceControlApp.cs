@@ -12,13 +12,26 @@ static class ServiceControlApp
         };
 
         var inactiveEndpoints = await GetInactiveEndpoints(client);
+        if (inactiveEndpoints.Count == 0)
+        {
+            Console.WriteLine("There are no stale endpoints");
+            return;
+        }
+
         await DeleteStaleEndpoints(client, inactiveEndpoints, cutoff);
     }
 
     static async Task DeleteStaleEndpoints(HttpClient client, List<EndpointStatus> inactiveEndpoints, TimeSpan cutoff)
     {
-        var endpointsToDelete = inactiveEndpoints.Where(status =>
-            status.HeartbeatInformation.LastReportAt < DateTime.Now.Subtract(cutoff));
+        var endpointsToDelete = inactiveEndpoints
+            .Where(status => status.HeartbeatInformation.LastReportAt < DateTime.UtcNow.Subtract(cutoff))
+            .ToList();
+        if (endpointsToDelete.Count == 0)
+        {
+            Console.WriteLine($"There are no stale endpoints older than the supplied cutoff ({cutoff})");
+            return;
+        }
+
         foreach (var toDelete in endpointsToDelete)
         {
             Console.WriteLine($"Endpoint {toDelete.Name} reported the last heartbeat more than {cutoff} ago. And it's status is stale. Removing it...");
@@ -56,9 +69,15 @@ static class ServiceControlApp
         };
 
         var inactiveEndpoints = await GetInactiveEndpoints(client);
+        if (inactiveEndpoints.Count == 0)
+        {
+            Console.WriteLine("There are no stale endpoints");
+            return;
+        }
+        
         foreach (var endpoint in inactiveEndpoints)
         {
-            Console.WriteLine($"{endpoint.Name}/{endpoint.Id} -> {endpoint.HeartbeatInformation.ReportedStatus}");
+            Console.WriteLine($"{endpoint.Name} stopped reporting heartbeats");
             Console.WriteLine(
                 $"\tEndpoint {endpoint.Name} is inactive, last reported at {endpoint.HeartbeatInformation.LastReportAt}.");
         }

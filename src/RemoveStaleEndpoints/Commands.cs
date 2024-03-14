@@ -25,19 +25,11 @@ static class Commands
     {
         var reportServiceControlStaleEndpointsCommand = new Command("report-service-control-stale-endpoints",
             "Report ServiceControl stale endpoints");
-        
-        var cutoffArg = new Argument<TimeSpan>("cutoff",
-            getDefaultValue: () => TimeSpan.FromMinutes(5),
-            description: "Stale delay (TimeSpan).");
-        
-        reportServiceControlStaleEndpointsCommand.AddArgument(cutoffArg);
-        
         reportServiceControlStaleEndpointsCommand.SetHandler(async context =>
         {
             var serviceControlUrl = context.ParseResult.GetValueForOption(UrlOption);
             await ServiceControlApp.ReportInactiveEndpoints(new Uri(serviceControlUrl!));
         });
-
         rootCommand.AddCommand(reportServiceControlStaleEndpointsCommand);
 
         var purgeServiceControlStaleEndpointsCommand = new Command("purge-service-control-stale-endpoints",
@@ -52,7 +44,6 @@ static class Commands
             var cutoff = context.ParseResult.GetValueForOption(cutoffArg);
             await ServiceControlApp.PurgeInactiveEndpoints(new Uri(serviceControlUrl!), cutoff);
         });
-
         rootCommand.AddCommand(purgeServiceControlStaleEndpointsCommand);
     }
 
@@ -66,7 +57,6 @@ static class Commands
             var serviceControlUrl = context.ParseResult.GetValueForOption(UrlOption);
             await ServiceControlMonitoringApp.ReportStaleInstances(new Uri(serviceControlUrl!));
         });
-
         rootCommand.AddCommand(reportServiceControlMonitoringStaleInstancesCommand);
 
         var purgeServiceControlStaleEndpointsCommand = new Command("purge-service-control-monitoring-stale-instances",
@@ -76,7 +66,6 @@ static class Commands
             var serviceControlUrl = context.ParseResult.GetValueForOption(UrlOption);
             await ServiceControlMonitoringApp.PurgeInactiveEndpoints(new Uri(serviceControlUrl!));
         });
-
         rootCommand.AddCommand(purgeServiceControlStaleEndpointsCommand);
     }
 }

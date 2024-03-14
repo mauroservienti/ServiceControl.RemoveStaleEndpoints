@@ -7,7 +7,7 @@
     },
     "Purge Primary stale endpoints (10-sec cutoff)": {
       "commandName": "Project",
-      "commandLineArgs": "purge-service-control-stale-endpoints --url http://localhost:33333/ --cutoff 00:00:10"
+      "commandLineArgs": "purge-service-control-stale-endpoints --url http://localhost:33333/ --cutoff 01:00:10"
     },
     "Report Monitoring stale instances": {
       "commandName": "Project",

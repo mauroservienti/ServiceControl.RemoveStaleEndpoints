@@ -42,10 +42,14 @@ static class Commands
 
         var purgeServiceControlStaleEndpointsCommand = new Command("purge-service-control-stale-endpoints",
             "Purge ServiceControl stale endpoints");
+        Option<TimeSpan> cutoffArg = new ("--cutoff",
+            getDefaultValue: () => TimeSpan.FromMinutes(5),
+            description: "Stale delay (TimeSpan).");
+        purgeServiceControlStaleEndpointsCommand.AddOption(cutoffArg);
         purgeServiceControlStaleEndpointsCommand.SetHandler(async context =>
         {
             var serviceControlUrl = context.ParseResult.GetValueForOption(UrlOption);
-            var cutoff = context.ParseResult.GetValueForArgument(cutoffArg);
+            var cutoff = context.ParseResult.GetValueForOption(cutoffArg);
             await ServiceControlApp.PurgeInactiveEndpoints(new Uri(serviceControlUrl!), cutoff);
         });
 

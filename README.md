@@ -1,4 +1,4 @@
-# RemoveStaleEndpoints
+# ServiceControl.RemoveStaleEndpoints
 
 The `servicecontrol-remove-stale-endpoints` command line tool removes inactive endpoints from ServiceControl primary instances and endpoint instances from ServiceControl Monitoring instances.
 

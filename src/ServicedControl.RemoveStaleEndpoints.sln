@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveStaleEndpoints", "RemoveStaleEndpoints\RemoveStaleEndpoints.csproj", "{11DFB52E-2F29-4545-8028-DD73A8DB551E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceControl.RemoveStaleEndpoints", "ServiceControl.RemoveStaleEndpoints\ServiceControl.RemoveStaleEndpoints.csproj", "{11DFB52E-2F29-4545-8028-DD73A8DB551E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

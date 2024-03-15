@@ -1,6 +1,6 @@
 using System.CommandLine;
 
-namespace RemoveStaleEndpoints;
+namespace ServiceControl.RemoveStaleEndpoints;
 
 static class Commands
 {

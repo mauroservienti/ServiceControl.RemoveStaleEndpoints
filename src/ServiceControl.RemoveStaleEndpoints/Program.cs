@@ -1,5 +1,5 @@
 ﻿using System.CommandLine;
-using RemoveStaleEndpoints;
+using ServiceControl.RemoveStaleEndpoints;
 
 var root = Commands.Configure();
 return await root.InvokeAsync(args);

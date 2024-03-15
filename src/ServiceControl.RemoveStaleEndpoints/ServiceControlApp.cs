@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace RemoveStaleEndpoints;
+namespace ServiceControl.RemoveStaleEndpoints;
 
 static class ServiceControlApp
 {

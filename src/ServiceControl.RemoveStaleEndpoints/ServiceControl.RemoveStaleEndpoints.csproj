@@ -5,6 +5,10 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <ToolCommandName>servicecontrol-remove-stale-endpoints</ToolCommandName>
+        <PackAsTool>True</PackAsTool>
+        <Description>A tool that removes inactive endpoints from ServiceControl primary instances and endpoint instances from ServiceControl Monitoring instances.</Description>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>

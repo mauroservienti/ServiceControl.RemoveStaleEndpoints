@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace RemoveStaleEndpoints;
+namespace ServiceControl.RemoveStaleEndpoints;
 
 public class MonitoredEndpoint
 {

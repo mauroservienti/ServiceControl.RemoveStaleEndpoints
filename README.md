@@ -15,7 +15,7 @@ servicecontrol-remove-stale-endpoints report-service-control-stale-endpoints --u
 To report inactive ServiceControl Monitoring endpoint instances, use:
 
 ```shell
-servicecontrol-remove-stale-endpoints report-service-control-monitoring-stale-instances --url http://localhost:33633"
+servicecontrol-remove-stale-endpoints report-service-control-monitoring-stale-instances --url http://localhost:33633
 ```
 
 ## Purging
@@ -25,7 +25,7 @@ The `purge-service-control-stale-endpoints` and `purge-service-control-monitorin
 To purge ServiceControl inactive endpoints:
 
 ```shell
-servicecontrol-remove-stale-endpoints purge-service-control-stale-endpoints --url http://localhost:33333/ --cutoff 00:00:10"
+servicecontrol-remove-stale-endpoints purge-service-control-stale-endpoints --url http://localhost:33333/ --cutoff 00:00:10
 ```
 
 The `cutoff` argument (Optional. It defaults to 15 minutes) determines how long endpoints should have been stale before being removed.
@@ -33,7 +33,7 @@ The `cutoff` argument (Optional. It defaults to 15 minutes) determines how long 
 To purge ServiceControl Monitoring inactive endpoint instances:
 
 ```shell
-servicecontrol-remove-stale-endpoints purge-service-control-monitoring-stale-instances --url http://localhost:33633"
+servicecontrol-remove-stale-endpoints purge-service-control-monitoring-stale-instances --url http://localhost:33633
 ```
 
 ## Installing
@@ -43,8 +43,6 @@ servicecontrol-remove-stale-endpoints purge-service-control-monitoring-stale-ins
 ```shell
 dotnet tool install -g ServiceControl.RemoveStaleEndpoints --add-source https://f.feedz.io/mauroservienti/pre-releases/nuget/index.json
 ```
-
-Run the tool with `servicecontrol-smoketest` to see the commands and arguments that can be used.
 
 ## Updating
 

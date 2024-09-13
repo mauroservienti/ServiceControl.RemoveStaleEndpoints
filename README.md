@@ -1,3 +1,6 @@
+> [!NOTE]
+> Starting with ServicePulse 1.42.1 and ServiceControl 5.9.1, the remove stale endpoints functionality is now built into the [Particular Service Platform](https://particular.net/service-platform). This command line tool is no longer maintained.
+
 # ServiceControl.RemoveStaleEndpoints
 
 The `servicecontrol-remove-stale-endpoints` command line tool removes inactive endpoints from ServiceControl primary instances and endpoint instances from ServiceControl Monitoring instances.
